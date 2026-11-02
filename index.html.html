@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#070914">
+<title>Nexora AI — Your intelligent companion</title>
+<style>
+:root{--bg:#070914;--panel:#0b1020;--panel2:#0e1428;--line:#202947;--text:#f4f6ff;--muted:#9aa8ce;--purple:#8a5cff;--blue:#28bfff;--glow:rgba(103,65,255,.22)}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 60% 0%,#10173b 0,transparent 44%),var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif;min-height:100vh}
+button,textarea{font:inherit}button{cursor:pointer;color:inherit}.app{display:flex;min-height:100vh}.sidebar{width:260px;background:rgba(8,11,23,.92);border-right:1px solid var(--line);padding:22px 16px;display:flex;flex-direction:column;gap:20px;flex-shrink:0}.brand{display:flex;align-items:center;gap:11px;font-size:23px;font-weight:750;letter-spacing:-.7px;padding:2px 8px 18px}.brand b{background:linear-gradient(100deg,var(--blue),var(--purple));-webkit-background-clip:text;color:transparent}.spark{font-size:32px;color:#b59aff;text-shadow:0 0 18px #734bff}.newchat,.navbtn,.history-item{border:1px solid var(--line);background:linear-gradient(120deg,rgba(123,75,255,.12),rgba(30,150,255,.06));border-radius:12px;padding:12px 13px;text-align:left;display:flex;align-items:center;gap:10px}.newchat:hover,.navbtn:hover,.history-item:hover{border-color:#6650ad;background:#141a35}.navlabel{font-size:11px;color:#7482a8;text-transform:uppercase;letter-spacing:1.5px;padding:0 10px;margin:5px 0 -12px}.history{display:flex;flex-direction:column;gap:7px;overflow:auto}.history-item{background:transparent;border-color:transparent;color:#b7c3e4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13px;padding:9px 11px}.sidebar-foot{margin-top:auto;border:1px solid var(--line);border-radius:14px;padding:15px;background:linear-gradient(140deg,#11112b,#0b1324);color:var(--muted);font-size:12px}.sidebar-foot strong{display:block;color:#fff;font-size:13px;margin-bottom:5px}.main{flex:1;min-width:0;display:flex;flex-direction:column}.topbar{height:70px;border-bottom:1px solid rgba(32,41,71,.7);display:flex;align-items:center;justify-content:space-between;padding:0 28px}.top-label{color:#aebbe0;font-size:13px}.top-actions{display:flex;gap:10px;align-items:center}.pill{border:1px solid var(--line);background:#0d1224;border-radius:999px;padding:9px 13px;color:#cbd5f4;font-size:12px}.content{width:min(900px,calc(100% - 42px));margin:0 auto;flex:1;display:flex;flex-direction:column;padding:36px 0 20px}.hero{text-align:center;padding:18px 0 27px}.hero-logo{font-size:68px;line-height:1.2;color:#b49bff;text-shadow:0 0 35px #6b36ff,0 0 70px #244fff;animation:float 4s ease-in-out infinite}.hero h1{font-size:clamp(36px,6vw,60px);letter-spacing:-2px;margin:0;font-weight:780}.gradient{background:linear-gradient(95deg,#fff 25%,#6edaff 57%,#a66cff 83%);-webkit-background-clip:text;color:transparent}.subtitle{color:#a7b5df;font-size:clamp(15px,2vw,20px);margin-top:8px}.features{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:22px 0 30px}.feature{border:1px solid rgba(47,59,98,.75);border-radius:13px;padding:14px 10px;text-align:center;background:rgba(10,16,35,.58)}.feature .ico{font-size:22px;color:#a58bff}.feature strong{display:block;font-size:13px;margin:5px 0 2px}.feature small{color:var(--muted);font-size:11px}.suggest-title{font-size:13px;color:#aab8dc;margin:0 0 10px 2px}.suggestions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.suggest{display:flex;justify-content:space-between;gap:10px;align-items:center;border:1px solid #293454;border-radius:13px;background:rgba(11,16,33,.8);padding:15px;text-align:left;color:#dce4ff;transition:.2s}.suggest:hover{border-color:#795aff;box-shadow:0 0 25px var(--glow);transform:translateY(-1px)}.suggest span:first-child{color:#a58bff;font-size:18px}.chat-area{display:flex;flex-direction:column;gap:17px;padding:15px 0 20px}.msg{max-width:88%;padding:13px 16px;border-radius:16px;white-space:pre-wrap;overflow-wrap:anywhere}.msg.user{align-self:flex-end;background:linear-gradient(120deg,#35226b,#172d63);border:1px solid #55449a}.msg.bot{align-self:flex-start;background:#0e1428;border:1px solid #263153;color:#e1e8ff}.msg .role{font-size:11px;color:#9eaff0;margin-bottom:5px;font-weight:700}.composer-wrap{position:sticky;bottom:0;padding:14px 0 5px;background:linear-gradient(transparent,var(--bg) 18%)}.composer{display:flex;align-items:flex-end;gap:10px;border:1px solid #3b4d7c;border-radius:24px;background:rgba(10,15,32,.96);padding:10px 11px 10px 17px;box-shadow:0 0 35px rgba(41,74,190,.09)}.composer:focus-within{border-color:#8b69ff;box-shadow:0 0 30px var(--glow)}textarea{flex:1;resize:none;min-height:28px;max-height:150px;border:0;outline:0;background:transparent;color:#fff;padding:7px 0}.send{width:42px;height:42px;border:0;border-radius:50%;background:linear-gradient(135deg,#a14dff,#3868ff);box-shadow:0 0 20px rgba(108,73,255,.35);font-size:18px}.hint{text-align:center;font-size:11px;color:#66769e;padding:9px 0 0}.empty .chat-area{display:none}.empty .hero,.empty .features,.empty .suggest-title,.empty .suggestions{display:block}.empty .hero{display:block}.empty .features{display:grid}.empty .suggestions{display:grid}.hidden{display:none!important}.notice{font-size:12px;color:#d7c99a;background:#282313;border:1px solid #514321;padding:10px 12px;border-radius:10px;margin-bottom:12px}.typing{color:#aab8dc;font-size:13px;padding:4px 0}@keyframes float{50%{transform:translateY(-7px)}}@media(max-width:760px){.sidebar{width:66px;padding:16px 8px;align-items:center}.brand{padding:0 0 12px;font-size:0}.brand .spark{font-size:29px}.newchat{font-size:0;justify-content:center;padding:12px;width:46px}.navlabel,.history,.sidebar-foot,.navtext{display:none}.topbar{padding:0 15px;height:60px}.content{width:calc(100% - 28px);padding-top:22px}.features{grid-template-columns:1fr 1fr}.feature{padding:10px 6px}.suggestions{grid-template-columns:1fr}.hero-logo{font-size:55px}.msg{max-width:96%}.pill{padding:7px 9px}}
+</style>
+</head>
+<body>
+<div class="app empty" id="app">
+<aside class="sidebar">
+  <div class="brand"><span class="spark">✦</span><span>Nexora <b>AI</b></span></div>
+  <button class="newchat" id="newChat"><span>＋</span><span class="navtext">New chat</span></button>
+  <div class="navlabel">Your space</div>
+  <div class="history" id="history"></div>
+  <div class="sidebar-foot"><strong>✦ Nexora AI</strong>Smarter conversations.<br>A brighter tomorrow.<br><br>Free starter edition</div>
+</aside>
+<main class="main">
+  <header class="topbar"><div class="top-label">AI assistant <span style="color:#6fdbb2">●</span> <span id="modeLabel">Cloudflare AI backend</span></div><div class="top-actions"><button class="pill" id="clearBtn">Clear chat</button></div></header>
+  <section class="content" id="content">
+    <div class="hero" id="hero"><div class="hero-logo">✦</div><h1>Nexora <span class="gradient">AI</span></h1><div class="subtitle">Your intelligent companion for everything</div></div>
+    <div class="features" id="features">
+      <div class="feature"><div class="ico">▤</div><strong>Ask Questions</strong><small>Clear, helpful answers</small></div>
+      <div class="feature"><div class="ico">♧</div><strong>Be Creative</strong><small>Ideas and content</small></div>
+      <div class="feature"><div class="ico">‹ ›</div><strong>Write Code</strong><small>Build and debug</small></div>
+      <div class="feature"><div class="ico">◇</div><strong>Learn</strong><small>Simplify topics</small></div>
+    </div>
+    <div class="suggest-title" id="suggestTitle">Try these to get started</div>
+    <div class="suggestions" id="suggestions">
+      <button class="suggest" data-prompt="Explain photosynthesis in simple words"><span>▤</span><span style="flex:1">Explain a topic in simple words</span><span>↗</span></button>
+      <button class="suggest" data-prompt="Give me five creative ideas for a school project"><span>✧</span><span style="flex:1">Give me creative ideas</span><span>↗</span></button>
+      <button class="suggest" data-prompt="Write a simple Python program to add two numbers"><span>‹ ›</span><span style="flex:1">Write a Python program</span><span>↗</span></button>
+      <button class="suggest" data-prompt="Explain how to summarize a long text"><span>▤</span><span style="flex:1">Summarize this text</span><span>↗</span></button>
+    </div>
+    <div class="chat-area" id="chatArea" aria-live="polite"></div>
+    <div class="composer-wrap">
+      <div class="notice" id="demoNotice">Nexora AI is connected to your Cloudflare Worker. Replies depend on Workers AI availability.</div>
+      <form class="composer" id="chatForm"><textarea id="prompt" placeholder="Ask Nexora AI anything..." rows="1" aria-label="Message"></textarea><button class="send" id="sendButton" aria-label="Send message" type="submit">➤</button></form>
+      <div class="hint">Nexora AI · Free starter · Don't share private information</div>
+    </div>
+  </section>
+</main>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+let chats=JSON.parse(localStorage.getItem('nexora_chats')||'[]'), active=[];
+function save(){localStorage.setItem('nexora_chats',JSON.stringify(chats.slice(0,30)));renderHistory()}
+function renderHistory(){const h=$('history');h.innerHTML='';chats.forEach((c,i)=>{const b=document.createElement('button');b.className='history-item';b.textContent='◷  '+(c.title||'New conversation');b.title=b.textContent;b.onclick=()=>{active=c.messages.slice();renderMessages();};h.appendChild(b)})}
+function escapeHTML(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function addMessage(role,text){active.push({role,text});renderMessages()}
+function renderMessages(){const area=$('chatArea');area.innerHTML='';active.forEach(m=>{const d=document.createElement('div');d.className='msg '+m.role;d.innerHTML='<div class="role">'+(m.role==='user'?'YOU':'NEXORA AI')+'</div><div>'+escapeHTML(m.text)+'</div>';area.appendChild(d)});const isEmpty=active.length===0;$('app').classList.toggle('empty',isEmpty);['hero','features','suggestTitle','suggestions'].forEach(id=>$(id).classList.toggle('hidden',!isEmpty));$('demoNotice').classList.toggle('hidden',!isEmpty);area.scrollTop=area.scrollHeight;window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})}
+function saveCurrent(){if(!active.length)return;const title=active.find(m=>m.role==='user')?.text?.slice(0,34)||'New conversation';chats.unshift({title,messages:active.slice()});chats=chats.slice(0,30);save()}
+async function send(text){
+  text=text.trim();
+  if(!text)return;
+  addMessage('user',text);
+  $('prompt').value='';
+  $('prompt').style.height='auto';
+
+  const wait=document.createElement('div');
+  wait.className='typing';
+  wait.textContent='Nexora is thinking…';
+  $('chatArea').appendChild(wait);
+  $('sendButton').disabled=true;
+
+  try{
+    const response=await fetch('https://nexora-ai-backend.pahadasingh-sasmita.workers.dev/',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        messages:active.slice(-20).map(m=>({
+          role:m.role==='user'?'user':'assistant',
+          content:m.text
+        }))
+      })
+    });
+    const data=await response.json();
+    if(!response.ok) throw new Error(data.error||'AI request failed.');
+    wait.remove();
+    addMessage('bot',data.reply||'No answer received. Please try again.');
+    saveCurrent();
+  }catch(error){
+    wait.remove();
+    addMessage('bot','Sorry, Nexora could not connect to the AI model. Check your internet connection, Workers AI binding, and model availability.');
+    console.error('Nexora AI error:',error);
+  }finally{
+    $('sendButton').disabled=false;
+  }
+}
+$('chatForm').addEventListener('submit',e=>{e.preventDefault();send($('prompt').value)});
+$('prompt').addEventListener('input',e=>{e.target.style.height='auto';e.target.style.height=Math.min(e.target.scrollHeight,150)+'px'});
+$('prompt').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();$('chatForm').requestSubmit()}});
+document.querySelectorAll('[data-prompt]').forEach(b=>b.addEventListener('click',()=>send(b.dataset.prompt)));
+$('newChat').onclick=()=>{active=[];renderMessages();$('prompt').focus()};
+$('clearBtn').onclick=()=>{active=[];renderMessages()};
+renderHistory();renderMessages();
+</script>
+</body>
+</html>
