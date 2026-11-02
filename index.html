@@ -224,12 +224,13 @@ async function send(text) {
     $('sendButton').disabled = false;
   }
 }
-
+modeButton.style.cssText =
+  'display:block;background:#171f38;color:#ffffff;border:1px solid #5265a8;margin-bottom:10px;padding:12px 20px;border-radius:20px;cursor:pointer;font-size:15px;font-weight:bold;';
 // Image and chat mode switch
 const modeButton = document.createElement('button');
 modeButton.type = 'button';
 modeButton.textContent = '✦ Mode: Chat';
-modeButton.style.cssText =
+modeButton.style.cssText 
   'margin-bottom:10px;padding:10px 16px;border-radius:20px;cursor:pointer;';
 
 $('chatForm').parentNode.insertBefore(modeButton, $('chatForm'));
