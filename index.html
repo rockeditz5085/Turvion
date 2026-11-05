@@ -19,7 +19,8 @@
  --shadow:0 18px 60px rgba(0,0,0,.35)
 }
 *{box-sizing:border-box}
-html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+html{min-height:100%;background:var(--bg)}
+body{margin:0;min-height:100%;position:relative;isolation:isolate;background:transparent;color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
 button,input,textarea,select{font:inherit}
 button{cursor:pointer;color:inherit}
 button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid #b89cff;outline-offset:2px}
@@ -27,15 +28,15 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
 body:before{
  content:"";position:fixed;inset:0;
  background-image:linear-gradient(90deg,rgba(5,7,17,.78),rgba(5,7,17,.35) 36%,rgba(5,7,17,.42)),url("odisha-heritage.jpg");
- background-position:center;background-size:cover;z-index:-2
+ background-position:center;background-size:cover;background-repeat:no-repeat;z-index:-1
 }
 body:after{
  content:"";position:fixed;inset:0;
  background:linear-gradient(180deg,rgba(5,7,17,.14),rgba(5,7,17,.55));
- z-index:-1;pointer-events:none
+ z-index:0;pointer-events:none
 }
 
-.app{display:flex;min-height:100vh}
+.app{display:flex;min-height:100vh;position:relative;z-index:1}
 .sidebar{
  width:278px;flex:0 0 278px;display:flex;flex-direction:column;gap:15px;
  padding:20px 15px;background:rgba(5,8,20,.86);backdrop-filter:blur(18px);
