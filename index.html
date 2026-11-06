@@ -1,9 +1,15 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#7b241c">
+
+<!-- Nexora AI Favicon -->
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+
 <title>Nexora AI — Odisha Edition</title>
 
 <style>
@@ -335,7 +341,7 @@ textarea {
   font-size: 20px;
 }
 
-.send:disabled { opacity: .5; }
+.send:disabled, .mode-btn:disabled { opacity: .5; cursor: not-allowed; }
 
 .hint {
   text-align: center;
@@ -451,6 +457,7 @@ const $ = id => document.getElementById(id);
 const API = 'https://nexora-ai-backend.pahadasingh-sasmita.workers.dev/';
 
 let chats = [];
+
 try {
   chats = JSON.parse(localStorage.getItem('nexora_chats') || '[]');
   if (!Array.isArray(chats)) chats = [];
@@ -544,9 +551,11 @@ function renderMessages() {
 
   const empty = active.length === 0;
   $('app').classList.toggle('empty', empty);
+
   ['hero','features','suggestTitle','suggestions'].forEach(id =>
     $(id).classList.toggle('hidden', !empty)
   );
+
   $('notice').classList.toggle('hidden', !empty);
   area.scrollTop = area.scrollHeight;
 }
@@ -574,6 +583,7 @@ $('historySearch').addEventListener('input', renderHistory);
 
 $('modeButton').onclick = () => {
   mode = mode === 'chat' ? 'image' : 'chat';
+
   $('modeButton').textContent = mode === 'chat'
     ? '🎙 Chat Mode'
     : '🎨 Image Creation Mode';
@@ -634,11 +644,13 @@ async function send(text) {
       if (!data.image) throw new Error(data.error || 'No image was returned.');
 
       let imageURL = data.image;
+
       if (imageURL.startsWith('data/')) {
         imageURL = new URL(imageURL, API).href;
       }
 
       addMessage('bot', 'Image generated successfully!', imageURL);
+
     } else {
       if (!data.reply) throw new Error(data.error || 'No AI reply was returned.');
       addMessage('bot', data.reply);
@@ -650,6 +662,7 @@ async function send(text) {
     loading.remove();
     addMessage('bot', 'Sorry! ' + (error.message || 'Something went wrong.'));
     console.error('Nexora AI error:', error);
+
   } finally {
     $('sendButton').disabled = false;
     $('modeButton').disabled = false;
