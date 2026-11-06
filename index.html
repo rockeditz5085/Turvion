@@ -6,9 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#7b241c">
 
-<!-- Nexora AI Favicon -->
-<link rel="icon" type="image/png" href="favicon.png">
-<link rel="apple-touch-icon" href="favicon.png">
+<!-- Nexora AI Odisha Favicon: embedded golden Konark Wheel -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%237b241c'/%3E%3Ccircle cx='50' cy='50' r='34' fill='none' stroke='%23f2c56b' stroke-width='6'/%3E%3Ccircle cx='50' cy='50' r='7' fill='%23f2c56b'/%3E%3Cpath d='M50 16V84 M16 50H84 M26 26L74 74 M74 26L26 74' stroke='%23f2c56b' stroke-width='4'/%3E%3C/svg%3E">
 
 <title>Nexora AI — Odisha Edition</title>
 
@@ -341,7 +340,10 @@ textarea {
   font-size: 20px;
 }
 
-.send:disabled, .mode-btn:disabled { opacity: .5; cursor: not-allowed; }
+.send:disabled, .mode-btn:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
 
 .hint {
   text-align: center;
@@ -372,7 +374,12 @@ textarea {
 
   .brand { font-size: 0; padding: 0 0 12px; }
   .brand-icon { font-size: 28px; }
-  .sidebar .side-btn { font-size: 0; text-align: center; padding: 10px 3px; }
+  .sidebar .side-btn {
+    font-size: 0;
+    text-align: center;
+    padding: 10px 3px;
+  }
+
   .side-label, .history, .sidebar-bottom { display: none; }
   .topbar { padding: 10px; }
   .top-title { font-size: 12px; }
@@ -388,12 +395,16 @@ textarea {
 <div class="app empty" id="app">
 
 <aside class="sidebar">
-  <div class="brand"><span class="brand-icon">☸</span><span>Nexora <span>AI</span></span></div>
+  <div class="brand">
+    <span class="brand-icon">☸</span>
+    <span>Nexora <span>AI</span></span>
+  </div>
 
   <button class="side-btn" id="newChat">＋ New Chat</button>
 
   <div class="side-label">Search conversations</div>
-  <input id="historySearch" placeholder="Search history..." style="padding:9px;border-radius:8px;border:1px solid #d7a64c;width:100%;">
+  <input id="historySearch" placeholder="Search history..."
+    style="padding:9px;border-radius:8px;border:1px solid #d7a64c;width:100%;">
 
   <div class="side-label">Your conversations</div>
   <div class="history" id="history"></div>
@@ -429,6 +440,7 @@ textarea {
   </div>
 
   <div class="suggest-title" id="suggestTitle">Try asking Nexora AI</div>
+
   <div class="suggestions" id="suggestions">
     <button class="suggest" data-prompt="Explain photosynthesis in simple words">📚 Explain a school topic</button>
     <button class="suggest" data-prompt="Tell me five interesting facts about Odisha">☸ Discover Odisha</button>
@@ -439,14 +451,22 @@ textarea {
   <div class="chat-area" id="chatArea" aria-live="polite"></div>
 
   <div class="composer-wrap">
-    <div class="notice" id="notice">Nexora AI is connected to its Cloudflare AI backend.</div>
+    <div class="notice" id="notice">
+      Nexora AI is connected to its Cloudflare AI backend.
+    </div>
+
     <button class="mode-btn" id="modeButton" type="button">🎙 Chat Mode</button>
 
     <form class="composer" id="chatForm">
-      <textarea id="prompt" rows="1" placeholder="Ask Nexora AI anything..." aria-label="Message"></textarea>
+      <textarea id="prompt" rows="1"
+        placeholder="Ask Nexora AI anything..."
+        aria-label="Message"></textarea>
       <button class="send" id="sendButton" type="submit">➤</button>
     </form>
-    <div class="hint">Nexora AI · Odisha Edition · Please don't share private information</div>
+
+    <div class="hint">
+      Nexora AI · Odisha Edition · Please don't share private information
+    </div>
   </div>
 </section>
 </main>
@@ -470,19 +490,24 @@ let mode = 'chat';
 
 function save() {
   try {
-    localStorage.setItem('nexora_chats', JSON.stringify(chats.slice(0, 30)));
+    localStorage.setItem(
+      'nexora_chats',
+      JSON.stringify(chats.slice(0, 30))
+    );
   } catch (e) {
     console.error('History save error:', e);
   }
+
   renderHistory();
 }
 
 function renderHistory() {
   const history = $('history');
   const search = $('historySearch').value.toLowerCase();
+
   history.innerHTML = '';
 
-  chats.forEach((chat, index) => {
+  chats.forEach(chat => {
     if (!(chat.title || '').toLowerCase().includes(search)) return;
 
     const button = document.createElement('button');
@@ -495,6 +520,7 @@ function renderHistory() {
         text: m.text || '',
         image: m.image || null
       }));
+
       renderMessages();
     };
 
@@ -517,7 +543,9 @@ function renderMessages() {
 
     const role = document.createElement('div');
     role.className = 'msg-role';
-    role.textContent = message.role === 'user' ? 'YOU' : 'NEXORA AI';
+    role.textContent =
+      message.role === 'user' ? 'YOU' : 'NEXORA AI';
+
     box.appendChild(role);
 
     if (message.image) {
@@ -534,6 +562,7 @@ function renderMessages() {
         const copy = document.createElement('button');
         copy.className = 'copy-btn';
         copy.textContent = '📋 Copy answer';
+
         copy.onclick = async () => {
           try {
             await navigator.clipboard.writeText(message.text);
@@ -542,6 +571,7 @@ function renderMessages() {
             copy.textContent = 'Copy unavailable';
           }
         };
+
         box.appendChild(copy);
       }
     }
@@ -550,11 +580,12 @@ function renderMessages() {
   });
 
   const empty = active.length === 0;
+
   $('app').classList.toggle('empty', empty);
 
-  ['hero','features','suggestTitle','suggestions'].forEach(id =>
-    $(id).classList.toggle('hidden', !empty)
-  );
+  ['hero','features','suggestTitle','suggestions'].forEach(id => {
+    $(id).classList.toggle('hidden', !empty);
+  });
 
   $('notice').classList.toggle('hidden', !empty);
   area.scrollTop = area.scrollHeight;
@@ -563,7 +594,8 @@ function renderMessages() {
 function saveCurrent() {
   if (!active.length) return;
 
-  const title = active.find(m => m.role === 'user')?.text?.slice(0, 40)
+  const title =
+    active.find(m => m.role === 'user')?.text?.slice(0, 40)
     || 'New conversation';
 
   chats.unshift({
@@ -610,12 +642,16 @@ async function send(text) {
     : 'Nexora AI is thinking...';
 
   $('chatArea').appendChild(loading);
+
   $('sendButton').disabled = true;
   $('modeButton').disabled = true;
 
   try {
     const payload = currentMode === 'image'
-      ? { action: 'generate-image', prompt: text }
+      ? {
+          action: 'generate-image',
+          prompt: text
+        }
       : {
           messages: active
             .filter(m => !m.image)
@@ -628,20 +664,26 @@ async function send(text) {
 
     const response = await fetch(API, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify(payload)
     });
 
     const data = await response.json();
 
     if (!response.ok) {
-      throw new Error(data.error || data.message || `Server error (${response.status})`);
+      throw new Error(
+        data.error || data.message || `Server error (${response.status})`
+      );
     }
 
     loading.remove();
 
     if (currentMode === 'image') {
-      if (!data.image) throw new Error(data.error || 'No image was returned.');
+      if (!data.image) {
+        throw new Error(data.error || 'No image was returned.');
+      }
 
       let imageURL = data.image;
 
@@ -652,7 +694,10 @@ async function send(text) {
       addMessage('bot', 'Image generated successfully!', imageURL);
 
     } else {
-      if (!data.reply) throw new Error(data.error || 'No AI reply was returned.');
+      if (!data.reply) {
+        throw new Error(data.error || 'No AI reply was returned.');
+      }
+
       addMessage('bot', data.reply);
     }
 
@@ -660,7 +705,12 @@ async function send(text) {
 
   } catch (error) {
     loading.remove();
-    addMessage('bot', 'Sorry! ' + (error.message || 'Something went wrong.'));
+
+    addMessage(
+      'bot',
+      'Sorry! ' + (error.message || 'Something went wrong.')
+    );
+
     console.error('Nexora AI error:', error);
 
   } finally {
@@ -676,7 +726,8 @@ $('chatForm').addEventListener('submit', event => {
 
 $('prompt').addEventListener('input', event => {
   event.target.style.height = 'auto';
-  event.target.style.height = Math.min(event.target.scrollHeight, 150) + 'px';
+  event.target.style.height =
+    Math.min(event.target.scrollHeight, 150) + 'px';
 });
 
 $('prompt').addEventListener('keydown', event => {
@@ -687,7 +738,9 @@ $('prompt').addEventListener('keydown', event => {
 });
 
 document.querySelectorAll('[data-prompt]').forEach(button => {
-  button.addEventListener('click', () => send(button.dataset.prompt));
+  button.addEventListener('click', () => {
+    send(button.dataset.prompt);
+  });
 });
 
 $('newChat').onclick = () => {
