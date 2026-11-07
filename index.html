@@ -4,480 +4,407 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#7b241c">
-
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%237b241c'/%3E%3Ccircle cx='50' cy='50' r='34' fill='none' stroke='%23f2c56b' stroke-width='6'/%3E%3Ccircle cx='50' cy='50' r='7' fill='%23f2c56b'/%3E%3Cpath d='M50 16V84 M16 50H84 M26 26L74 74 M74 26L26 74' stroke='%23f2c56b' stroke-width='4'/%3E%3C/svg%3E">
-
-<title>Nexora AI — Odisha Edition</title>
+<meta name="theme-color" content="#17100e">
+<title>TURVION AI — Intelligence Without Limits</title>
 
 <style>
 :root {
-  --red: #7b241c;
-  --dark-red: #4e1712;
-  --gold: #f2c56b;
-  --cream: #fff7e8;
-  --ink: #2e1710;
-  --glass: rgba(255,248,231,.95);
-  --border: rgba(124,55,24,.35);
+  --bg:#100c0b;
+  --panel:#1c1512;
+  --panel2:#251b17;
+  --gold:#e7b86b;
+  --red:#a83b2c;
+  --text:#fff6e9;
+  --muted:#bcae9d;
+  --border:rgba(231,184,107,.2);
 }
 
-* {
-  box-sizing: border-box;
-}
+* {box-sizing:border-box}
 
 body {
-  margin: 0;
-  min-height: 100vh;
-  color: var(--ink);
-  font-family: Georgia, "Times New Roman", serif;
-  background-image: url("odisha-heritage.jpg");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:
+  radial-gradient(ellipse at top,#49241b 0%,transparent 55%),
+  var(--bg);
+  color:var(--text);
+  min-height:100vh;
 }
 
-button, input, textarea, select {
-  font: inherit;
-}
+button,input,textarea {font:inherit}
 
-button {
-  cursor: pointer;
-}
+button {cursor:pointer}
 
 .app {
-  display: flex;
-  min-height: 100vh;
+  display:flex;
+  min-height:100vh;
 }
 
+/* SIDEBAR */
+
 .sidebar {
-  width: 260px;
-  flex-shrink: 0;
-  padding: 20px 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  background: rgba(74,24,15,.95);
-  color: #fff3d7;
-  border-right: 3px solid var(--gold);
+  width:260px;
+  background:rgba(20,14,12,.96);
+  border-right:1px solid var(--border);
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
 }
 
 .brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 5px 8px 20px;
-  font-size: 24px;
-  font-weight: bold;
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:8px 0 18px;
+  border-bottom:1px solid var(--border);
 }
 
-.brand-icon {
-  color: var(--gold);
-  font-size: 30px;
+.logo {
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,#e7b86b,#8d382b);
+  color:#21120c;
+  font-size:24px;
+  font-weight:900;
 }
 
-.brand span:last-child {
-  color: var(--gold);
+.brand h2 {
+  margin:0;
+  font-size:19px;
+  letter-spacing:2px;
 }
 
-.side-btn, .history-item {
-  border: 1px solid rgba(242,197,107,.45);
-  background: rgba(255,255,255,.08);
-  color: #fff3d7;
-  border-radius: 10px;
-  padding: 11px 12px;
-  text-align: left;
-  width: 100%;
+.brand small {
+  color:var(--gold);
+  font-size:10px;
+  letter-spacing:2px;
 }
 
-.side-btn:hover, .history-item:hover {
-  background: rgba(242,197,107,.2);
+.sidebtn {
+  width:100%;
+  padding:13px;
+  background:var(--panel2);
+  border:1px solid var(--border);
+  color:var(--text);
+  border-radius:11px;
+  text-align:left;
+  margin-bottom:8px;
 }
 
-.side-label {
-  font-size: 12px;
-  color: var(--gold);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-top: 8px;
+.sidebtn:hover {border-color:var(--gold)}
+
+.history-title {
+  font-size:12px;
+  color:var(--muted);
+  margin-top:10px;
 }
 
-.history {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  overflow-y: auto;
-  max-height: 45vh;
+#history {
+  overflow-y:auto;
+  max-height:45vh;
 }
 
 .history-item {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 13px;
+  padding:10px;
+  border-radius:9px;
+  font-size:13px;
+  color:var(--muted);
+  cursor:pointer;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
 }
 
-.sidebar-bottom {
-  margin-top: auto;
-  border: 1px solid rgba(242,197,107,.5);
-  border-radius: 12px;
-  padding: 13px;
-  font-size: 12px;
-  line-height: 1.6;
-  color: #f5dfb5;
+.history-item:hover {background:var(--panel2)}
+
+.sidebar-footer {
+  margin-top:auto;
+  font-size:11px;
+  line-height:1.7;
+  color:var(--muted);
 }
+
+/* MAIN */
 
 .main {
-  min-width: 0;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+  flex:1;
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
 }
 
 .topbar {
-  min-height: 65px;
-  padding: 12px 22px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  background: rgba(255,248,231,.94);
-  border-bottom: 2px solid var(--gold);
+  min-height:68px;
+  padding:14px 22px;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
 }
 
-.top-title {
-  font-weight: bold;
-  color: var(--red);
+.topbar-title {
+  font-weight:bold;
+  letter-spacing:1px;
 }
 
-.top-actions {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+.status {
+  color:#9bdf9e;
+  font-size:11px;
+  margin-top:5px;
 }
 
-.small-btn {
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 8px 12px;
-  background: #fff8e8;
-  color: var(--red);
-}
-
-.content {
-  width: min(900px, calc(100% - 30px));
-  margin: 0 auto;
-  padding: 25px 0 20px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.hero {
-  text-align: center;
-  padding: 20px 12px;
-  background: var(--glass);
-  border: 2px solid var(--gold);
-  border-radius: 18px;
-  box-shadow: 0 6px 25px rgba(58,20,10,.15);
-}
-
-.hero-symbol {
-  font-size: 45px;
-  color: var(--red);
-}
-
-.hero h1 {
-  margin: 0;
-  font-size: clamp(34px,5vw,58px);
-  color: var(--red);
-}
-
-.hero h1 span {
-  color: #bd7621;
-}
-
-.subtitle {
-  margin-top: 8px;
-  font-size: 17px;
-  color: #6b3921;
-}
-
-.heritage-tag {
-  display: inline-block;
-  margin-top: 12px;
-  padding: 5px 14px;
-  border: 1px solid var(--gold);
-  border-radius: 20px;
-  color: var(--red);
-  font-size: 13px;
-}
-
-.features {
-  display: grid;
-  grid-template-columns: repeat(4,1fr);
-  gap: 10px;
-  margin: 18px 0;
-}
-
-.feature {
-  text-align: center;
-  padding: 14px 8px;
-  background: var(--glass);
-  border: 1px solid var(--gold);
-  border-radius: 12px;
-}
-
-.feature-icon {
-  font-size: 24px;
-}
-
-.feature strong {
-  display: block;
-  color: var(--red);
-  margin: 5px 0;
-}
-
-.feature small {
-  color: #68452d;
-}
-
-.suggest-title {
-  margin: 5px 0 10px;
-  font-weight: bold;
-  color: #fff8e8;
-  text-shadow: 0 1px 3px #4b1b10;
-}
-
-.suggestions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.suggest {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  text-align: left;
-  border: 1px solid var(--gold);
-  border-radius: 12px;
-  padding: 14px;
-  background: var(--glass);
-  color: var(--red);
-}
-
-.suggest:hover {
-  background: #ffe9bd;
-}
-
-.chat-area {
-  display: flex;
-  flex-direction: column;
-  gap: 13px;
-  padding: 20px 0;
-}
-
-.msg {
-  max-width: 90%;
-  padding: 14px 16px;
-  border-radius: 15px;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-  background: var(--glass);
-  border: 1px solid var(--gold);
-  line-height: 1.6;
-}
-
-.msg.user {
-  align-self: flex-end;
-  background: var(--red);
-  border-color: #e5b55a;
-  color: #fff8e8;
-}
-
-.msg.bot {
-  align-self: flex-start;
-}
-
-.msg-role {
-  font-size: 12px;
-  font-weight: bold;
-  color: #a45a22;
-  margin-bottom: 6px;
-}
-
-.msg.user .msg-role {
-  color: #f4ce80;
-}
-
-.msg img {
-  max-width: 100%;
-  width: 500px;
-  display: block;
-  border-radius: 10px;
-  margin-top: 5px;
-}
-
-.copy-btn, .speak-btn {
-  margin: 10px 6px 0 0;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 6px 9px;
-  background: #fff3d8;
-  color: var(--red);
-  font-size: 12px;
-}
-
-.composer-wrap {
-  position: sticky;
-  bottom: 0;
-  padding: 12px 0 5px;
+.mode-buttons {
+  display:flex;
+  gap:7px;
 }
 
 .mode-btn {
-  margin-bottom: 8px;
-  padding: 9px 14px;
-  border-radius: 20px;
-  border: 1px solid var(--gold);
-  background: var(--red);
-  color: white;
+  border:1px solid var(--border);
+  background:var(--panel);
+  color:var(--muted);
+  padding:9px 14px;
+  border-radius:20px;
 }
 
-.voice-controls {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 9px;
+.mode-btn.active {
+  background:var(--gold);
+  color:#21130d;
+  border-color:var(--gold);
+  font-weight:bold;
 }
 
-.voice-controls button,
-.voice-controls select {
-  border: 1px solid var(--gold);
-  border-radius: 18px;
-  padding: 8px 12px;
-  background: var(--glass);
-  color: var(--red);
+/* CHAT */
+
+.chat-area {
+  width:100%;
+  max-width:900px;
+  margin:auto;
+  padding:25px 22px;
+  flex:1;
 }
 
-.voice-status {
-  color: #fff8e8;
-  text-shadow: 0 1px 3px #3b160c;
-  font-size: 12px;
-  min-height: 18px;
-  padding: 3px 2px;
+.welcome {
+  text-align:center;
+  padding:65px 10px 35px;
 }
 
-.composer {
-  display: flex;
-  align-items: flex-end;
-  gap: 10px;
-  padding: 10px 12px 10px 16px;
-  border: 2px solid var(--gold);
-  border-radius: 22px;
-  background: rgba(255,248,231,.97);
-  box-shadow: 0 4px 20px rgba(45,15,7,.15);
+.welcome-symbol {
+  width:85px;
+  height:85px;
+  margin:0 auto 20px;
+  display:grid;
+  place-items:center;
+  border:2px solid var(--gold);
+  border-radius:50%;
+  color:var(--gold);
+  font-size:42px;
+  box-shadow:0 0 35px rgba(231,184,107,.15);
 }
 
-textarea {
-  flex: 1;
-  min-height: 28px;
-  max-height: 150px;
-  resize: none;
-  border: 0;
-  outline: 0;
-  background: transparent;
-  color: var(--ink);
-  padding: 7px 0;
+.welcome h1 {
+  font-size:38px;
+  letter-spacing:5px;
+  margin:10px 0;
 }
 
-.send {
-  width: 42px;
-  height: 42px;
-  border: 0;
-  border-radius: 50%;
-  background: var(--red);
-  color: #fff4d8;
-  font-size: 20px;
+.welcome p {
+  color:var(--muted);
+  line-height:1.7;
 }
 
-button:disabled {
-  opacity: .5;
-  cursor: not-allowed;
+.messages {
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  padding-bottom:25px;
 }
 
-.hint {
-  text-align: center;
-  color: #fff8e8;
-  text-shadow: 0 1px 3px #3b160c;
-  font-size: 12px;
-  padding-top: 8px;
+.message {
+  max-width:85%;
+  padding:14px 17px;
+  border-radius:16px;
+  line-height:1.65;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
 }
 
-.notice {
-  background: var(--glass);
-  border: 1px solid var(--gold);
-  color: var(--red);
-  border-radius: 10px;
-  padding: 10px;
-  font-size: 12px;
-  margin-bottom: 10px;
+.user {
+  align-self:flex-end;
+  background:#70402d;
+  border:1px solid #a66b45;
 }
 
-.hidden {
-  display: none !important;
+.assistant {
+  align-self:flex-start;
+  background:var(--panel);
+  border:1px solid var(--border);
 }
 
-@media(max-width:760px) {
+.message-label {
+  display:block;
+  color:var(--gold);
+  font-size:10px;
+  font-weight:bold;
+  margin-bottom:7px;
+  letter-spacing:1px;
+}
+
+.message img {
+  max-width:100%;
+  border-radius:12px;
+  margin-top:10px;
+}
+
+.message-actions {
+  display:flex;
+  gap:10px;
+  margin-top:10px;
+}
+
+.message-actions button {
+  background:transparent;
+  border:0;
+  color:var(--muted);
+  font-size:12px;
+}
+
+/* IMAGE */
+
+.image-panel {
+  display:none;
+  max-width:750px;
+  margin:20px auto;
+  padding:20px;
+  border:1px solid var(--border);
+  border-radius:18px;
+  background:var(--panel);
+}
+
+.image-panel textarea {
+  width:100%;
+  min-height:110px;
+  resize:vertical;
+  background:#100c0b;
+  color:white;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:14px;
+  outline:none;
+}
+
+.image-result {
+  max-width:100%;
+  display:block;
+  margin:20px auto;
+  border-radius:14px;
+}
+
+/* INPUT */
+
+.input-wrap {
+  position:sticky;
+  bottom:0;
+  background:linear-gradient(transparent,var(--bg) 20%);
+  padding:15px 20px 22px;
+}
+
+.input-box {
+  max-width:900px;
+  margin:auto;
+  display:flex;
+  align-items:flex-end;
+  gap:9px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:17px;
+  padding:10px;
+}
+
+.input-box textarea {
+  flex:1;
+  min-width:0;
+  max-height:140px;
+  resize:none;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:white;
+  padding:10px 5px;
+  line-height:1.5;
+}
+
+.icon-btn {
+  width:42px;
+  height:42px;
+  flex-shrink:0;
+  border:1px solid var(--border);
+  background:var(--panel2);
+  color:var(--gold);
+  border-radius:12px;
+  font-size:17px;
+}
+
+.send-btn {
+  background:linear-gradient(135deg,#e7b86b,#a64a32);
+  color:#21120c;
+  border:0;
+  font-weight:bold;
+}
+
+.icon-btn:hover {filter:brightness(1.2)}
+
+.bottom-note {
+  text-align:center;
+  color:#8f8173;
+  font-size:10px;
+  margin-top:10px;
+}
+
+select {
+  background:var(--panel2);
+  color:var(--text);
+  border:1px solid var(--border);
+  padding:8px;
+  border-radius:9px;
+}
+
+.hidden {display:none!important}
+
+@media(max-width:700px) {
   .sidebar {
-    width: 62px;
-    padding: 12px 6px;
-    align-items: center;
-  }
-
-  .brand {
-    font-size: 0;
-    padding: 0 0 12px;
-  }
-
-  .brand-icon {
-    font-size: 28px;
-  }
-
-  .sidebar .side-btn {
-    font-size: 0;
-    text-align: center;
-    padding: 10px 3px;
-  }
-
-  .side-label, .history, .sidebar-bottom {
-    display: none;
+    display:none;
   }
 
   .topbar {
-    padding: 10px;
+    padding:12px;
+    flex-wrap:wrap;
   }
 
-  .top-title {
-    font-size: 12px;
+  .welcome h1 {
+    font-size:29px;
   }
 
-  .content {
-    width: calc(100% - 18px);
-    padding-top: 12px;
+  .chat-area {
+    padding:15px 12px;
   }
 
-  .features {
-    grid-template-columns: 1fr 1fr;
+  .message {
+    max-width:94%;
   }
 
-  .suggestions {
-    grid-template-columns: 1fr;
+  .input-wrap {
+    padding:10px;
   }
 
-  .msg {
-    max-width: 97%;
+  .mode-btn {
+    padding:8px 11px;
+    font-size:12px;
   }
 }
 </style>
@@ -485,593 +412,545 @@ button:disabled {
 
 <body>
 
-<div class="app" id="app">
+<div class="app">
 
 <aside class="sidebar">
+
   <div class="brand">
-    <span class="brand-icon">☸</span>
-    <span>Nexora <span>AI</span></span>
+    <div class="logo">V</div>
+    <div>
+      <h2>TURVION</h2>
+      <small>ARTIFICIAL INTELLIGENCE</small>
+    </div>
   </div>
 
-  <button class="side-btn" id="newChat">＋ New Chat</button>
+  <button class="sidebtn" onclick="newChat()">＋ New Chat</button>
+  <button class="sidebtn" onclick="clearHistory()">⌫ Clear History</button>
 
-  <div class="side-label">Search conversations</div>
-  <input id="historySearch" placeholder="Search history..."
-    style="padding:9px;border-radius:8px;border:1px solid #d7a64c;width:100%;">
+  <div class="history-title">RECENT CONVERSATIONS</div>
+  <div id="history"></div>
 
-  <div class="side-label">Your conversations</div>
-  <div class="history" id="history"></div>
-
-  <div class="sidebar-bottom">
-    <strong>☸ Nexora AI — Odisha Edition</strong><br>
-    Inspired by the culture and heritage of Odisha.<br><br>
-    Powered by Cloudflare AI
+  <div class="sidebar-footer">
+    Intelligence Without Limits.<br>
+    Inspired by the heritage of Odisha.<br>
+    © 2026 TURVION AI
   </div>
+
 </aside>
 
 <main class="main">
 
-<header class="topbar">
-  <div class="top-title">☸ Nexora AI · Odisha Edition</div>
-  <div class="top-actions">
-    <button class="small-btn" id="clearBtn">Clear Chat</button>
-  </div>
-</header>
-
-<section class="content">
-
-  <div class="hero" id="hero">
-    <div class="hero-symbol">☸</div>
-    <h1>Nexora <span>AI</span></h1>
-    <div class="subtitle">Your intelligent companion — inspired by Odisha</div>
-    <div class="heritage-tag">ଓଡ଼ିଶା · Odisha Edition</div>
-  </div>
-
-  <div class="features" id="features">
-    <div class="feature">
-      <div class="feature-icon">📚</div>
-      <strong>Learn</strong>
-      <small>Understand new topics</small>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">✨</div>
-      <strong>Create</strong>
-      <small>Explore your ideas</small>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">💻</div>
-      <strong>Code</strong>
-      <small>Build and debug</small>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">🎨</div>
-      <strong>Imagine</strong>
-      <small>Generate images</small>
-    </div>
-  </div>
-
-  <div class="suggest-title" id="suggestTitle">
-    Try asking Nexora AI
-  </div>
-
-  <div class="suggestions" id="suggestions">
-    <button class="suggest" data-prompt="Explain photosynthesis in simple words">
-      📚 Explain a school topic
-    </button>
-    <button class="suggest" data-prompt="Tell me five interesting facts about Odisha">
-      ☸ Discover Odisha
-    </button>
-    <button class="suggest" data-prompt="Write a simple Python program to add two numbers">
-      💻 Help me write code
-    </button>
-    <button class="suggest" data-prompt="Give me a creative idea for a school project">
-      ✨ Give me creative ideas
-    </button>
-  </div>
-
-  <div class="chat-area" id="chatArea" aria-live="polite"></div>
-
-  <div class="composer-wrap">
-
-    <div class="notice" id="notice">
-      Nexora AI is connected to its Cloudflare AI backend.
+  <header class="topbar">
+    <div>
+      <div class="topbar-title">TURVION AI</div>
+      <div class="status" id="status">● Cloudflare backend</div>
     </div>
 
-    <button class="mode-btn" id="modeButton" type="button">
-      🎙 Chat Mode
-    </button>
+    <div class="mode-buttons">
+      <button class="mode-btn active" id="chatMode"
+      onclick="setMode('chat')">Chat</button>
 
-    <div class="voice-controls">
-      <button type="button" id="micButton">🎤 Speak</button>
+      <button class="mode-btn" id="imageMode"
+      onclick="setMode('image')">Image</button>
+    </div>
+  </header>
 
-      <select id="voiceLanguage" aria-label="Voice language">
-        <option value="en-IN">English (India)</option>
-        <option value="hi-IN">Hindi</option>
-        <option value="or-IN">Odia</option>
+  <section class="chat-area">
+
+    <div class="welcome" id="welcome">
+      <div class="welcome-symbol">✦</div>
+      <h1>TURVION</h1>
+      <p>Intelligence Without Limits.</p>
+      <p>Your ideas deserve extraordinary possibilities.</p>
+    </div>
+
+    <div class="messages" id="messages"></div>
+
+    <div class="image-panel" id="imagePanel">
+      <h3>✦ AI Image Studio</h3>
+      <p style="color:var(--muted)">
+        Describe the image you want to create.
+      </p>
+
+      <textarea id="imagePrompt"
+      placeholder="Describe your imagination..."></textarea>
+
+      <br><br>
+
+      <button class="mode-btn active"
+      onclick="generateImage()">Generate Image ✨</button>
+
+      <div id="imageStatus"></div>
+      <div id="imageOutput"></div>
+    </div>
+
+  </section>
+
+  <section class="input-wrap" id="chatInputArea">
+
+    <div class="input-box">
+
+      <button class="icon-btn" onclick="startVoice()"
+      title="Voice input">🎙️</button>
+
+      <textarea id="userInput" rows="1"
+      placeholder="Message TURVION AI..."
+      onkeydown="handleEnter(event)"></textarea>
+
+      <button class="icon-btn" onclick="toggleSpeech()"
+      title="Toggle spoken replies" id="speechBtn">🔊</button>
+
+      <button class="icon-btn send-btn"
+      onclick="sendMessage()">➤</button>
+
+    </div>
+
+    <div style="text-align:center;margin-top:9px">
+      <select id="language">
+        <option value="en-US">English</option>
+        <option value="hi-IN">हिन्दी</option>
+        <option value="or-IN">ଓଡ଼ିଆ</option>
       </select>
-
-      <button type="button" id="stopVoice">⏹ Stop voice</button>
     </div>
 
-    <div class="voice-status" id="voiceStatus" aria-live="polite">
-      Voice is ready when supported by your browser.
+    <div class="bottom-note">
+      TURVION AI can make mistakes. Verify important information.
     </div>
 
-    <form class="composer" id="chatForm">
-      <textarea id="prompt" rows="1"
-        placeholder="Ask Nexora AI anything..."
-        aria-label="Message"></textarea>
+  </section>
 
-      <button class="send" id="sendButton" type="submit">➤</button>
-    </form>
-
-    <div class="hint">
-      Nexora AI · Odisha Edition · Please don't share private information
-    </div>
-
-  </div>
-</section>
 </main>
 </div>
 
 <script>
-const $ = id => document.getElementById(id);
 
-const API = 'https://nexora-ai-backend.pahadasingh-sasmita.workers.dev/';
+/* CONFIGURATION */
 
-let chats = [];
+const WORKER_URL =
+"https://nexora-ai-backend.pahadasingh-sasmita.workers.dev/";
 
-try {
-  chats = JSON.parse(localStorage.getItem('nexora_chats') || '[]');
-  if (!Array.isArray(chats)) chats = [];
-} catch {
-  chats = [];
-}
+const STORAGE_KEY = "nexora_chats";
 
-let active = [];
-let mode = 'chat';
+let conversations = [];
+let currentChat = null;
+let mode = "chat";
+let speakingEnabled = true;
+let recognition = null;
 
-function save() {
+/* STORAGE */
+
+function loadHistory() {
   try {
-    localStorage.setItem(
-      'nexora_chats',
-      JSON.stringify(chats.slice(0, 30))
+    conversations = JSON.parse(
+      localStorage.getItem(STORAGE_KEY) || "[]"
     );
-  } catch (error) {
-    console.error('History save error:', error);
+
+    if (!Array.isArray(conversations)) conversations = [];
+  } catch {
+    conversations = [];
   }
 
   renderHistory();
 }
 
-function renderHistory() {
-  const history = $('history');
-  const search = $('historySearch').value.toLowerCase();
-
-  history.innerHTML = '';
-
-  chats.forEach(chat => {
-    if (!(chat.title || '').toLowerCase().includes(search)) return;
-
-    const button = document.createElement('button');
-    button.className = 'history-item';
-    button.textContent = '◷ ' + (chat.title || 'Conversation');
-
-    button.onclick = () => {
-      stopVoice();
-
-      active = (chat.messages || []).map(message => ({
-        role: message.role,
-        text: message.text || '',
-        image: message.image || null
-      }));
-
-      renderMessages();
-    };
-
-    history.appendChild(button);
-  });
+function saveHistory() {
+  try {
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(conversations.slice(0,30))
+    );
+  } catch {
+    setStatus("Storage full — some history may not save");
+  }
 }
 
-function addMessage(role, text, image = null) {
-  active.push({role, text, image});
+function newChat() {
+  currentChat = {
+    id:Date.now(),
+    title:"New conversation",
+    messages:[]
+  };
+
+  conversations.unshift(currentChat);
+  saveHistory();
+  renderMessages();
+  renderHistory();
+}
+
+function clearHistory() {
+  if (!confirm("Delete all saved conversations?")) return;
+
+  conversations = [];
+  currentChat = null;
+
+  saveHistory();
+  renderHistory();
   renderMessages();
 }
 
+function openChat(id) {
+  currentChat = conversations.find(c => c.id === id) || null;
+  renderMessages();
+  renderHistory();
+}
+
+function renderHistory() {
+  const box = document.getElementById("history");
+  box.innerHTML = "";
+
+  conversations.forEach(chat => {
+    const item = document.createElement("div");
+    item.className = "history-item";
+    item.textContent = chat.title || "New conversation";
+    item.onclick = () => openChat(chat.id);
+    box.appendChild(item);
+  });
+}
+
+/* MESSAGES */
+
 function renderMessages() {
-  const area = $('chatArea');
-  area.innerHTML = '';
+  const box = document.getElementById("messages");
+  const welcome = document.getElementById("welcome");
 
-  active.forEach(message => {
-    const box = document.createElement('div');
-    box.className = 'msg ' + message.role;
+  box.innerHTML = "";
 
-    const role = document.createElement('div');
-    role.className = 'msg-role';
-    role.textContent =
-      message.role === 'user' ? 'YOU' : 'NEXORA AI';
+  if (!currentChat || currentChat.messages.length === 0) {
+    welcome.classList.remove("hidden");
+    return;
+  }
 
-    box.appendChild(role);
+  welcome.classList.add("hidden");
 
-    if (message.image) {
-      const img = document.createElement('img');
-      img.src = message.image;
-      img.alt = 'Image generated by Nexora AI';
-      box.appendChild(img);
-    } else {
-      const text = document.createElement('div');
-      text.textContent = message.text || '';
-      box.appendChild(text);
+  currentChat.messages.forEach(message => {
+    addMessageElement(message.role, message.content, false);
+  });
 
-      if (message.role === 'bot' && message.text) {
-        const copy = document.createElement('button');
-        copy.className = 'copy-btn';
-        copy.textContent = '📋 Copy answer';
+  box.scrollIntoView({block:"end",behavior:"smooth"});
+}
 
-        copy.onclick = async () => {
-          try {
-            await navigator.clipboard.writeText(message.text);
-            copy.textContent = 'Copied!';
-          } catch {
-            copy.textContent = 'Copy unavailable';
-          }
-        };
+function addMessageElement(role, content, save = true) {
+  const box = document.getElementById("messages");
 
-        box.appendChild(copy);
+  document.getElementById("welcome").classList.add("hidden");
 
-        const speak = document.createElement('button');
-        speak.className = 'speak-btn';
-        speak.type = 'button';
-        speak.textContent = '🔊 Read aloud';
-        speak.onclick = () => speakText(message.text);
+  const message = document.createElement("div");
+  message.className = "message " +
+    (role === "user" ? "user" : "assistant");
 
-        box.appendChild(speak);
+  const label = document.createElement("span");
+  label.className = "message-label";
+  label.textContent = role === "user" ? "YOU" : "TURVION AI";
+
+  const text = document.createElement("div");
+  text.textContent = content;
+
+  message.appendChild(label);
+  message.appendChild(text);
+
+  if (role === "assistant") {
+    const actions = document.createElement("div");
+    actions.className = "message-actions";
+
+    const speak = document.createElement("button");
+    speak.textContent = "🔊 Listen";
+    speak.onclick = () => speakText(content);
+
+    const copy = document.createElement("button");
+    copy.textContent = "Copy";
+    copy.onclick = async () => {
+      try {
+        await navigator.clipboard.writeText(content);
+        copy.textContent = "Copied!";
+      } catch {
+        copy.textContent = "Copy unavailable";
       }
-    }
-
-    area.appendChild(box);
-  });
-
-  const empty = active.length === 0;
-
-  ['hero','features','suggestTitle','suggestions'].forEach(id => {
-    $(id).classList.toggle('hidden', !empty);
-  });
-
-  $('notice').classList.toggle('hidden', !empty);
-
-  area.scrollTop = area.scrollHeight;
-}
-
-function saveCurrent() {
-  if (!active.length) return;
-
-  const title =
-    active.find(message => message.role === 'user')?.text?.slice(0,40)
-    || 'New conversation';
-
-  chats.unshift({
-    title,
-    messages: active.map(message => ({
-      role: message.role,
-      text: message.text || '',
-      image: message.image || null
-    }))
-  });
-
-  chats = chats.slice(0,30);
-  save();
-}
-
-$('historySearch').addEventListener('input', renderHistory);
-
-
-// CHAT AND IMAGE MODE
-
-$('modeButton').onclick = () => {
-  mode = mode === 'chat' ? 'image' : 'chat';
-
-  $('modeButton').textContent = mode === 'chat'
-    ? '🎙 Chat Mode'
-    : '🎨 Image Creation Mode';
-
-  $('prompt').placeholder = mode === 'chat'
-    ? 'Ask Nexora AI anything...'
-    : 'Describe the image you want to create...';
-};
-
-
-// VOICE FEATURES
-
-let recognition = null;
-let listening = false;
-
-function setVoiceStatus(message) {
-  $('voiceStatus').textContent = message;
-}
-
-function speakText(text) {
-  if (!('speechSynthesis' in window)) {
-    setVoiceStatus('Speech playback is not supported in this browser.');
-    return;
-  }
-
-  window.speechSynthesis.cancel();
-
-  const utterance = new SpeechSynthesisUtterance(text);
-
-  utterance.lang = $('voiceLanguage').value;
-  utterance.rate = 1;
-  utterance.pitch = 1;
-
-  utterance.onstart = () => {
-    setVoiceStatus('Nexora AI is speaking...');
-  };
-
-  utterance.onend = () => {
-    setVoiceStatus('Finished speaking.');
-  };
-
-  utterance.onerror = () => {
-    setVoiceStatus('Could not play this voice. Try another browser voice.');
-  };
-
-  window.speechSynthesis.speak(utterance);
-}
-
-function stopVoice() {
-  if (recognition && listening) {
-    recognition.stop();
-  }
-
-  if ('speechSynthesis' in window) {
-    window.speechSynthesis.cancel();
-  }
-
-  setVoiceStatus('Voice playback/listening stopped.');
-}
-
-function startListening() {
-  const SpeechRecognition =
-    window.SpeechRecognition || window.webkitSpeechRecognition;
-
-  if (!SpeechRecognition) {
-    setVoiceStatus(
-      'Speech recognition is not supported here. Try the latest Google Chrome or type your message.'
-    );
-    return;
-  }
-
-  if (mode !== 'chat') {
-    mode = 'chat';
-    $('modeButton').textContent = '🎙 Chat Mode';
-    $('prompt').placeholder = 'Ask Nexora AI anything...';
-  }
-
-  if (recognition && listening) {
-    recognition.stop();
-    return;
-  }
-
-  recognition = new SpeechRecognition();
-
-  recognition.lang = $('voiceLanguage').value;
-  recognition.continuous = false;
-  recognition.interimResults = false;
-  recognition.maxAlternatives = 1;
-
-  recognition.onstart = () => {
-    listening = true;
-    $('micButton').textContent = '🎙 Listening...';
-    setVoiceStatus('Listening. Speak clearly.');
-  };
-
-  recognition.onresult = event => {
-    const spokenText = event.results[0][0].transcript.trim();
-
-    if (spokenText) {
-      $('prompt').value = spokenText;
-      setVoiceStatus('Recognised: ' + spokenText);
-      send(spokenText);
-    }
-  };
-
-  recognition.onerror = event => {
-    const messages = {
-      'not-allowed':
-        'Microphone permission was blocked. Allow microphone access in browser settings.',
-      'no-speech':
-        'No speech detected. Press Speak and try again.',
-      'network':
-        'Speech recognition needs a network connection. You can type instead.',
-      'audio-capture':
-        'No microphone was found. Check your microphone connection.'
     };
 
-    setVoiceStatus(
-      messages[event.error] || 'Voice recognition error: ' + event.error
-    );
-  };
+    actions.append(speak,copy);
+    message.appendChild(actions);
+  }
 
-  recognition.onend = () => {
-    listening = false;
-    $('micButton').textContent = '🎤 Speak';
-  };
+  box.appendChild(message);
 
-  try {
-    recognition.start();
-  } catch (error) {
-    listening = false;
-    $('micButton').textContent = '🎤 Speak';
-    setVoiceStatus('Could not start the microphone. Please try again.');
-    console.error('Voice error:', error);
+  if (save && currentChat) {
+    currentChat.messages.push({role,content});
+    saveHistory();
+  }
+
+  message.scrollIntoView({block:"end",behavior:"smooth"});
+  return message;
+}
+
+/* MODE */
+
+function setMode(value) {
+  mode = value;
+
+  document.getElementById("chatMode")
+    .classList.toggle("active",value === "chat");
+
+  document.getElementById("imageMode")
+    .classList.toggle("active",value === "image");
+
+  document.getElementById("chatInputArea")
+    .classList.toggle("hidden",value !== "chat");
+
+  document.getElementById("imagePanel")
+    .style.display = value === "image" ? "block" : "none";
+}
+
+/* STATUS */
+
+function setStatus(message) {
+  document.getElementById("status").textContent = message;
+}
+
+/* CHAT REQUEST */
+
+function handleEnter(event) {
+  if (event.key === "Enter" && !event.shiftKey) {
+    event.preventDefault();
+    sendMessage();
   }
 }
 
-$('micButton').addEventListener('click', startListening);
+async function sendMessage() {
+  const input = document.getElementById("userInput");
+  const prompt = input.value.trim();
 
-$('stopVoice').addEventListener('click', stopVoice);
+  if (!prompt) return;
 
-$('voiceLanguage').addEventListener('change', () => {
-  if (recognition && listening) {
-    recognition.stop();
+  if (!currentChat) newChat();
+
+  input.value = "";
+
+  if (currentChat.messages.length === 0) {
+    currentChat.title = prompt.slice(0,35);
   }
 
-  setVoiceStatus(
-    'Voice language set to ' +
-    $('voiceLanguage').selectedOptions[0].text + '.'
+  addMessageElement("user",prompt);
+
+  const loading = addMessageElement(
+    "assistant","TURVION is thinking..."
   );
-});
 
-
-// SEND MESSAGE TO CLOUDFLARE WORKER
-
-async function send(text) {
-  text = text.trim();
-
-  if (!text) return;
-
-  const currentMode = mode;
-
-  addMessage('user', text);
-
-  $('prompt').value = '';
-  $('prompt').style.height = 'auto';
-
-  const loading = document.createElement('div');
-  loading.className = 'msg bot';
-
-  loading.textContent = currentMode === 'image'
-    ? '🎨 Creating your image...'
-    : 'Nexora AI is thinking...';
-
-  $('chatArea').appendChild(loading);
-
-  $('sendButton').disabled = true;
-  $('modeButton').disabled = true;
-  $('micButton').disabled = true;
+  const sendButton = document.querySelector(".send-btn");
+  sendButton.disabled = true;
+  setStatus("● Connecting to AI...");
 
   try {
-    const payload = currentMode === 'image'
-      ? {
-          action: 'generate-image',
-          prompt: text
-        }
-      : {
-          messages: active
-            .filter(message => !message.image)
-            .slice(-20)
-            .map(message => ({
-              role: message.role === 'user' ? 'user' : 'assistant',
-              content: message.text
-            }))
-        };
-
-    const response = await fetch(API, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
+    const response = await fetch(WORKER_URL,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        messages:currentChat.messages
+      })
     });
 
     const data = await response.json();
 
     if (!response.ok) {
-      throw new Error(
-        data.error || data.message || `Server error (${response.status})`
-      );
+      throw new Error(data.error || data.message ||
+        "Server error: " + response.status);
     }
 
-    loading.remove();
+    const reply =
+      data.response ||
+      data.reply ||
+      data.result ||
+      data.output ||
+      data.text ||
+      data.content ||
+      data.message;
 
-    if (currentMode === 'image') {
-      if (!data.image) {
-        throw new Error(data.error || 'No image was returned.');
-      }
-
-      let imageURL = data.image;
-
-      if (imageURL.startsWith('data/')) {
-        imageURL = new URL(imageURL, API).href;
-      }
-
-      addMessage('bot', 'Image generated successfully!', imageURL);
-
-    } else {
-      if (!data.reply) {
-        throw new Error(data.error || 'No AI reply was returned.');
-      }
-
-      addMessage('bot', data.reply);
+    if (typeof reply !== "string" || !reply.trim()) {
+      throw new Error("The AI returned an empty or unexpected response.");
     }
 
-    saveCurrent();
+    currentChat.messages.push({
+      role:"assistant",
+      content:reply
+    });
 
-  } catch (error) {
-    loading.remove();
+    saveHistory();
 
-    addMessage(
-      'bot',
-      'Sorry! ' + (error.message || 'Something went wrong.')
-    );
+    const textElement = loading.querySelector("div");
+    textElement.textContent = reply;
 
-    console.error('Nexora AI error:', error);
+    setStatus("● Cloudflare backend connected");
+
+    if (speakingEnabled) speakText(reply);
+
+    renderHistory();
+
+  } catch(error) {
+    loading.querySelector("div").textContent =
+      "Sorry, I couldn't get a reply. " + error.message;
+
+    setStatus("● Connection or AI error");
+    console.error(error);
 
   } finally {
-    $('sendButton').disabled = false;
-    $('modeButton').disabled = false;
-    $('micButton').disabled = false;
+    sendButton.disabled = false;
   }
 }
 
+/* VOICE INPUT */
 
-// FORM AND INPUT EVENTS
+function startVoice() {
+  const SpeechRecognition =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
 
-$('chatForm').addEventListener('submit', event => {
-  event.preventDefault();
-  send($('prompt').value);
-});
-
-$('prompt').addEventListener('input', event => {
-  event.target.style.height = 'auto';
-
-  event.target.style.height =
-    Math.min(event.target.scrollHeight,150) + 'px';
-});
-
-$('prompt').addEventListener('keydown', event => {
-  if (event.key === 'Enter' && !event.shiftKey) {
-    event.preventDefault();
-    $('chatForm').requestSubmit();
+  if (!SpeechRecognition) {
+    alert("Voice recognition is not supported in this browser. Try Chrome.");
+    return;
   }
-});
 
-document.querySelectorAll('[data-prompt]').forEach(button => {
-  button.addEventListener('click', () => {
-    send(button.dataset.prompt);
-  });
-});
+  if (recognition) {
+    try { recognition.stop(); } catch {}
+  }
 
-$('newChat').onclick = () => {
-  stopVoice();
-  active = [];
-  renderMessages();
-  $('prompt').focus();
-};
+  recognition = new SpeechRecognition();
+  recognition.lang = document.getElementById("language").value;
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
 
-$('clearBtn').onclick = () => {
-  stopVoice();
-  active = [];
-  renderMessages();
-};
+  setStatus("● Listening...");
 
+  recognition.onresult = event => {
+    const result = event.results[0][0].transcript;
+    document.getElementById("userInput").value +=
+      (document.getElementById("userInput").value ? " " : "") + result;
 
-// INITIALISE WEBSITE
+    setStatus("● Voice captured");
+  };
 
-renderHistory();
-renderMessages();
+  recognition.onerror = event => {
+    setStatus("● Voice error: " + event.error);
+  };
+
+  recognition.onend = () => {
+    if (document.getElementById("status").textContent.includes("Listening")) {
+      setStatus("● Cloudflare backend");
+    }
+  };
+
+  recognition.start();
+}
+
+/* SPOKEN REPLIES */
+
+function toggleSpeech() {
+  speakingEnabled = !speakingEnabled;
+
+  document.getElementById("speechBtn").textContent =
+    speakingEnabled ? "🔊" : "🔇";
+
+  if (!speakingEnabled && "speechSynthesis" in window) {
+    speechSynthesis.cancel();
+  }
+}
+
+function speakText(text) {
+  if (!speakingEnabled || !("speechSynthesis" in window)) return;
+
+  speechSynthesis.cancel();
+
+  const utterance = new SpeechSynthesisUtterance(text);
+
+  utterance.lang = document.getElementById("language").value;
+  utterance.rate = 1;
+  utterance.pitch = 1;
+
+  const voices = speechSynthesis.getVoices();
+
+  const voice = voices.find(v =>
+    v.lang.toLowerCase() === utterance.lang.toLowerCase()
+  );
+
+  if (voice) utterance.voice = voice;
+
+  speechSynthesis.speak(utterance);
+}
+
+/* IMAGE GENERATION */
+
+async function generateImage() {
+  const prompt =
+    document.getElementById("imagePrompt").value.trim();
+
+  if (!prompt) {
+    alert("Please describe the image first.");
+    return;
+  }
+
+  const status = document.getElementById("imageStatus");
+  const output = document.getElementById("imageOutput");
+
+  status.textContent = "Generating your image...";
+  output.innerHTML = "";
+
+  try {
+    const response = await fetch(WORKER_URL,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        action:"generate-image",
+        prompt:prompt
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Image generation failed.");
+    }
+
+    const imageURL =
+      data.image ||
+      data.image_url ||
+      data.url ||
+      data.result;
+
+    if (typeof imageURL !== "string" ||
+        !/^https?:\/\//i.test(imageURL) &&
+        !/^data:image\//i.test(imageURL)) {
+      throw new Error(
+        "The Worker did not return a supported image URL."
+      );
+    }
+
+    const img = document.createElement("img");
+    img.src = imageURL;
+    img.alt = "Generated by TURVION AI";
+    img.className = "image-result";
+
+    output.appendChild(img);
+    status.textContent = "Image generated successfully!";
+
+  } catch(error) {
+    status.textContent =
+      "Image generation error: " + error.message;
+
+    console.error(error);
+  }
+}
+
+/* START */
+
+loadHistory();
+
+if ("speechSynthesis" in window) {
+  speechSynthesis.getVoices();
+}
+
+if (conversations.length > 0) {
+  openChat(conversations[0].id);
+}
 
 </script>
+
 </body>
 </html>
