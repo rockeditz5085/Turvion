@@ -31,7 +31,9 @@ function showView(id){
     voice:'Voice Assistant'
   };
 
-  document.getElementById('crumb').textContent=names[id]||id;
+  const crumb=document.getElementById('crumb');
+  if(crumb) crumb.textContent=names[id]||id;
+
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -67,6 +69,7 @@ function openStudentTool(name,prefix){
 
 function selectTool(name,prefix){
   selectedStudentTool=name;
+
   document.getElementById('selectedToolLabel').textContent=
     'Selected tool: '+name;
 
@@ -128,7 +131,6 @@ async function sendChat(){
   const box=document.getElementById('chatMessages');
 
   addBubble(box,'user',q);
-
   chatHistory.push({role:'user',content:q});
 
   const load=addBubble(box,'ai','TURVION is thinking...');
@@ -178,7 +180,6 @@ async function runStudentTool(){
   }
 
   const output=document.getElementById('studentOutput');
-
   output.textContent='Working on your request...';
 
   try{
@@ -283,14 +284,11 @@ function makeChart(){
   area.innerHTML='';
 
   const h=document.createElement('div');
-
   h.style.cssText='font-weight:700;margin-bottom:8px';
   h.textContent=title;
-
   area.appendChild(h);
 
   const bars=document.createElement('div');
-
   bars.className='chartbars';
 
   labels.forEach((label,i)=>{
@@ -387,10 +385,7 @@ async function sendVoiceQuestion(){
     out.textContent=reply;
 
     if(speakingEnabled){
-      speakText(
-        reply,
-        document.getElementById('voiceLanguage').value
-      );
+      speakText(reply,document.getElementById('voiceLanguage').value);
     }
 
   }catch(e){
@@ -415,6 +410,31 @@ function toggleSpeech(){
   }
 }
 
+// LANGUAGE VOICE CHECKER
+function checkHindiVoice(){
+  if(!('speechSynthesis'in window)){
+    alert('Speech is not supported in this browser.');
+    return;
+  }
+
+  const voices=speechSynthesis.getVoices();
+
+  const hindi=voices.filter(v=>
+    v.lang.toLowerCase().startsWith('hi')
+  );
+
+  const odia=voices.filter(v=>
+    v.lang.toLowerCase().startsWith('or')
+  );
+
+  alert(
+    'HINDI VOICES:\n'+
+    (hindi.length?hindi.map(v=>v.name+' ('+v.lang+')').join('\n'):'None found')+
+    '\n\nODIA VOICES:\n'+
+    (odia.length?odia.map(v=>v.name+' ('+v.lang+')').join('\n'):'None found')
+  );
+}
+
 // HINDI / ODIA / ENGLISH TEXT-TO-SPEECH
 function speakText(text,selectedLanguage){
   if(!speakingEnabled||!('speechSynthesis'in window)){
@@ -423,31 +443,41 @@ function speakText(text,selectedLanguage){
 
   speechSynthesis.cancel();
 
-  const u=new SpeechSynthesisUtterance(text);
+  const lang=selectedLanguage||'en-US';
+  const languageCode=lang.split('-')[0].toLowerCase();
 
-  const lang=selectedLanguage||
-    document.getElementById('language')?.value||
-    'en-US';
+  function speakWhenReady(){
+    const voices=speechSynthesis.getVoices();
 
-  u.lang=lang;
-  u.rate=0.9;
-  u.pitch=1;
+    const matchingVoice=voices.find(v=>
+      v.lang.toLowerCase()===lang.toLowerCase()
+    )||voices.find(v=>
+      v.lang.toLowerCase().startsWith(languageCode)
+    );
 
-  const voices=speechSynthesis.getVoices();
+    if(!matchingVoice&&languageCode!=='en'){
+      alert('No voice found for '+lang+
+        '. Please install a supported language voice.');
+      return;
+    }
 
-  const voice=voices.find(v=>
-    v.lang.toLowerCase()===lang.toLowerCase()
-  )||voices.find(v=>
-    v.lang.toLowerCase().startsWith(
-      lang.split('-')[0].toLowerCase()
-    )
-  );
+    const utterance=new SpeechSynthesisUtterance(text);
+    utterance.lang=lang;
+    utterance.rate=0.9;
+    utterance.pitch=1;
 
-  if(voice){
-    u.voice=voice;
+    if(matchingVoice){
+      utterance.voice=matchingVoice;
+    }
+
+    speechSynthesis.speak(utterance);
   }
 
-  speechSynthesis.speak(u);
+  if(speechSynthesis.getVoices().length>0){
+    speakWhenReady();
+  }else{
+    speechSynthesis.onvoiceschanged=speakWhenReady;
+  }
 }
 
 // LOAD BROWSER VOICES
@@ -460,7 +490,11 @@ if('speechSynthesis'in window){
 }
 
 // SEARCH
-document.getElementById('quickSearch').addEventListener('input',e=>{
-  if(!e.target.value){}
-});
+const quickSearch=document.getElementById('quickSearch');
+
+if(quickSearch){
+  quickSearch.addEventListener('input',e=>{
+    if(!e.target.value){}
+  });
+}
 </script>
