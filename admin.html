@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#111018"><title>TURVION AI — Owner Control Panel</title>
+<style>
+:root{color-scheme:dark;--bg:#111018;--panel:#1c1a25;--line:#383342;--gold:#f2c56b;--muted:#b9b3c0;--green:#58d39a}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#342332,#111018 55%);color:#fff8ec;font:15px/1.5 system-ui,Arial,sans-serif;min-height:100vh}
+main{width:min(960px,94%);margin:32px auto}.brand{display:flex;gap:12px;align-items:center;margin-bottom:20px}.logo{width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#7b241c,#d5a34d);display:grid;place-items:center;font-size:25px}.brand h1{font-size:22px;margin:0}.brand p,.muted{color:var(--muted);font-size:13px;margin:2px 0}
+.panel{background:#1c1a25ed;border:1px solid var(--line);border-radius:17px;padding:20px;margin:15px 0;box-shadow:0 12px 35px #0003}h2{font-size:18px;margin:0 0 12px}
+input[type=password]{width:100%;padding:13px;border:1px solid var(--line);border-radius:10px;background:#111018;color:white;margin:8px 0;font-size:16px}
+button{border:0;border-radius:10px;background:var(--gold);color:#24190a;font-weight:700;padding:11px 16px;cursor:pointer}button.secondary{background:#393442;color:white}button:disabled{opacity:.6}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.hidden{display:none!important}.status{font-size:13px;color:var(--muted);margin-top:10px;min-height:18px}.bad{color:#ff9188}.good{color:var(--green)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat{background:#111018;border:1px solid var(--line);border-radius:12px;padding:14px}.stat strong{display:block;color:var(--gold);font-size:24px}.stat span{color:var(--muted);font-size:12px}
+.tools{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.tool{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#111018;border:1px solid var(--line);border-radius:11px;padding:11px}.switch{appearance:none;width:42px;height:24px;border-radius:20px;background:#555;position:relative;cursor:pointer;flex:none;margin:0}.switch:checked{background:#27885d}.switch:before{content:"";position:absolute;width:18px;height:18px;top:3px;left:3px;background:white;border-radius:50%;transition:.15s}.switch:checked:before{left:21px}
+.maintenance{display:flex;gap:12px;align-items:center;padding:14px;border:1px solid var(--line);border-radius:12px;background:#111018}.maintenance input{width:19px;height:19px;accent-color:#27885d}footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+@media(max-width:620px){.stats,.tools{grid-template-columns:1fr}.panel{padding:15px}}
+</style></head>
+<body><main>
+<header class="brand"><div class="logo">☸</div><div><h1>TURVION AI</h1><p>Owner Control Panel · Private administration</p></div></header>
+<section class="panel" id="loginPanel"><h2>Owner sign in</h2><p class="muted">Sign-in is verified by your Cloudflare Worker. This is separate from the public AI website.</p>
+<input id="password" type="password" autocomplete="current-password" placeholder="Owner password"><button id="loginBtn">Sign in</button><div class="status" id="loginStatus" role="status"></div></section>
+<div id="dashboard" class="hidden">
+<section class="panel"><div class="row"><h2>System overview</h2><button class="secondary" id="refreshBtn">Refresh</button></div>
+<div class="stats"><div class="stat"><strong id="total">—</strong><span>Tracked requests</span></div><div class="stat"><strong id="failed">—</strong><span>Failed requests</span></div><div class="stat"><strong id="status">—</strong><span>Backend status</span></div></div><p class="muted" id="last">Last tracked request: —</p></section>
+<section class="panel"><h2>Feature controls</h2><p class="muted">These switches are checked by the backend. Save after changing them.</p><div class="tools" id="featureList"></div>
+<div class="row" style="margin-top:15px"><span class="muted">Settings are stored in TURVION_KV.</span><button id="saveBtn">Save settings</button></div><div class="status" id="saveStatus" role="status"></div></section>
+<section class="panel"><h2>Maintenance mode</h2><label class="maintenance"><input type="checkbox" id="maintenance"><span><b>Enable maintenance mode</b><br><small class="muted">Blocks public AI requests until switched off.</small></span></label></section>
+<section class="panel"><div class="row"><h2>Usage by action</h2><button class="secondary" id="logoutBtn">Sign out</button></div><p class="muted" id="usage">No usage data yet.</p></section>
+</div><footer>Owner access only · Never share your password or Worker secrets.</footer></main>
+<script>
+const WORKER_URL="https://Turvion-ai-backend.pahadasingh-sasmita.workers.dev/";
+const TOKEN_KEY="turvion_owner_token";
+const featureNames=[
+["ai-chat","AI Chat"],["image-generation","Image Generation"],["photo-analysis","Photo Analysis"],["document-analysis","Document Analysis"],
+["web-search","AI Web Search"],["math-solver","Math Solver"],["quiz-generator","Quiz Generator"],["coding-assistant","AI Coding Assistant"],
+["text-summarizer","Text Summarizer"],["flashcard-maker","Flashcard Maker"],["presentation-maker","Presentation Maker"],
+["story-writer","AI Story Writer"],["study-planner","Study Planner"],["voice-assistant","AI Voice Assistant"],["image-editing","Image Editing"]
+];
+let token=localStorage.getItem(TOKEN_KEY)||"",settings={maintenanceMode:false,features:{}};
+function normalizeSettings(raw){
+ const source=raw && typeof raw==="object" ? raw : {};
+ const rawFeatures=source.features && typeof source.features==="object" ? source.features : source;
+ const features={};
+ for(const [key] of featureNames){
+   // Accept the nested feature map and older flat settings responses.
+   features[key]=rawFeatures[key]!==false;
+ }
+ return {maintenanceMode:source.maintenanceMode===true,features};
+}
+const $=id=>document.getElementById(id);
+async function call(action,data={},auth=false){
+ const headers={"Content-Type":"application/json"};if(auth&&token)headers.Authorization="Bearer "+token;
+ const response=await fetch(WORKER_URL,{method:"POST",headers,body:JSON.stringify({action,...data})});
+ const result=await response.json().catch(()=>({error:"Invalid response from backend."}));
+ if(!response.ok)throw new Error(result.error||"Request failed: "+response.status);return result;
+}
+function message(id,text,type=""){const el=$(id);el.textContent=text;el.className="status "+type;}
+function showDashboard(){ $("loginPanel").classList.add("hidden");$("dashboard").classList.remove("hidden");}
+function logout(){token="";localStorage.removeItem(TOKEN_KEY);$("dashboard").classList.add("hidden");$("loginPanel").classList.remove("hidden");}
+async function login(){
+ $("loginBtn").disabled=true;message("loginStatus","Checking owner password…");
+ try{const result=await call("admin-login",{password:$("password").value});token=result.token;localStorage.setItem(TOKEN_KEY,token);$("password").value="";showDashboard();await refresh();}
+ catch(e){message("loginStatus",e.message,"bad");}
+ finally{$("loginBtn").disabled=false;}
+}
+function drawFeatures(){
+ const root=$("featureList");root.replaceChildren();
+ for(const [key,label] of featureNames){const wrap=document.createElement("label");wrap.className="tool";
+ const text=document.createElement("span");text.textContent=label;const input=document.createElement("input");input.type="checkbox";input.className="switch";input.dataset.feature=key;input.checked=settings.features[key]!==false;wrap.append(text,input);root.append(wrap);}
+}
+async function refresh(){
+ try{const data=await call("admin-status",{},true);settings=normalizeSettings(data.settings);
+ $("total").textContent=data.usage?.totalRequests??0;$("failed").textContent=data.usage?.failedRequests??0;$("status").textContent=data.status||"Unknown";
+ $("last").textContent="Last tracked request: "+(data.usage?.lastRequestAt||"No requests recorded");
+ $("maintenance").checked=!!settings.maintenanceMode;drawFeatures();
+ const actions=data.usage?.actions||{};const entries=Object.entries(actions).sort((a,b)=>b[1]-a[1]).map(([k,v])=>k+": "+v);
+ $("usage").textContent=entries.length?entries.join(" · "):"No usage data recorded yet.";
+ }catch(e){if(e.message.toLowerCase().includes("owner login")){logout();message("loginStatus","Please sign in again.");}else message("saveStatus",e.message,"bad");}
+}
+async function save(){
+ $("saveBtn").disabled=true;message("saveStatus","Saving…");
+ try{const features={};document.querySelectorAll("[data-feature]").forEach(el=>features[el.dataset.feature]=el.checked);
+ const result=await call("admin-update-settings",{settings:{maintenanceMode:$("maintenance").checked,features}},true);
+ settings=normalizeSettings(result.settings);message("saveStatus","Settings saved successfully.","good");await refresh();}
+ catch(e){message("saveStatus",e.message,"bad");}finally{$("saveBtn").disabled=false;}
+}
+$("loginBtn").addEventListener("click",login);$("password").addEventListener("keydown",e=>{if(e.key==="Enter")login();});
+$("refreshBtn").addEventListener("click",refresh);$("saveBtn").addEventListener("click",save);$("logoutBtn").addEventListener("click",logout);
+if(token){showDashboard();refresh();}
+</script></body></html>
